@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Currency Check</title>
+        <link rel="stylesheet" href="{% static 'main.css' %}" type="text/css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body id="index" class="home">
+        <header id="banner" class="body">
+            <h1><a href="#">Web Crawler<strong>Final Project for CSCI6651 - Introduction to Python</strong>
+            </a></h1>
+            <nav>
+                <ul>
+                    <li class="active"><a href="/index/">Home</a></li>
+                    <li><a href="/search_currency/">Get Currency History</a></li>
+                    <li><a href="/search_bank/">Get Currency</a></li>
+                </ul>
+            </nav>
+        </header>
+        <aside id="featured" class="body">
+            <div id="home" class="tab-pane fade in active">
+                <h1>HOME</h1>
+            </div>
+        </aside>
+    </body>
+</html>

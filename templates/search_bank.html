@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Currency Check</title>
+        <link rel="stylesheet" href="{% static 'main.css' %}" type="text/css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body id="index" class="home">
+        <header id="banner" class="body">
+            <h1><a href="#">Web Crawler<strong>Final Project for CSCI6651 - Introduction to Python</strong>
+            </a></h1>
+            <nav>
+                <ul>
+                    <li><a href="/index/">Home</a></li>
+                    <li><a href="/search_currency/">Get Currency History</a></li>
+                    <li class="active"><a href="/search_bank/">Get Currency</a></li>
+                </ul>
+            </nav>
+        </header>
+        <aside id="featured" class="body">
+            <div id="home" class="tab-pane fade in active">
+                <h1>Instruction:</h1> Please select the bank, currency and press Search Button
+            </div>
+            <div id="search1" ckass="tab-pane fade">
+                <article>
+                    <form action="/search_bank_action/" method="get">
+                        <p>
+                            <strong style="font-size: 150%;">Bank</strong>
+                            <select name="bank">
+                                <option value="">SELECT ONE</option>
+                                {% for item in bank %}
+                                    {% if item.0 == bank_selected %}
+                                        <option value={{ item.0 }} selected="selected">{{ item.1 }}</option>
+                                    {% else %}
+                                        <option value={{ item.0 }}>{{ item.1 }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <strong style="font-size: 150%;">Currency</strong>
+                            <select name="currency">
+                                <option value="">SELECT ONE</option>
+                                {% for currency in currencies %}
+                                    {% if currency == currency_selected %}
+                                        <option value={{ currency }} selected="selected">{{ currency }}</option>
+                                    {% else %}
+                                        <option value={{ currency }}>{{ currency }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+
+                        <input type="submit" value="Search"/>
+                        </p></h1>
+                    </form>
+                </article>
+                <p>
+                    {% if error %}
+                        {% for data in msg %}
+                            <p style="color:red">ERROR: {{ data }}</p>
+                        {% endfor %}
+                    {%  endif %}
+                </p>
+                {% if data_list %}
+                    <table>
+                        <tr>
+                            <th>Date</th>
+                            <th>Bank</th>
+                            <th>Buy</th>
+                            <th>Sell</th>
+                        </tr>
+                        {% for data in data_list %}
+                            <tr>
+                                <td>{{ data.date }}</td>
+                                <td>{{ data.bank }}</td>
+                                <td>{{ data.buy }}</td>
+                                <td>{{ data.sell }}</td>
+                            </tr>
+                        {%  endfor %}
+                    </table>
+                {% endif %}
+            </div>
+        </aside>
+
+
+
+    </body>
+</html>
+

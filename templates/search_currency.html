@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Currency Check</title>
+        <link rel="stylesheet" href="{% static 'main.css' %}" type="text/css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body id="index" class="home">
+        <header id="banner" class="body">
+            <h1><a href="#">Web Crawler<strong>Final Project for CSCI6651 - Introduction to Python</strong>
+            </a></h1>
+            <nav>
+                <ul>
+                    <li><a href="/index/">Home</a></li>
+                    <li class="active"><a href="/search_currency/">Get Currency History</a></li>
+                    <li><a href="/search_bank/">Get Currency</a></li>
+                </ul>
+            </nav>
+        </header>
+        <aside id="featured" class="body">
+            <div id="home" class="tab-pane fade in active">
+                <h1>Instruction:</h1> Please entered the period of time you want to search, select a currency and press Search Button
+            </div>
+            <div id="search1" ckass="tab-pane fade">
+                <article>
+                    <form action="/search_currency_action/" method="get">
+                        <p><strong style="font-size: 0.36em;"></strong>
+                            From: <input type="date" name="from" value="{{ from_date }}"/>
+                            To: <input type="date" name="to" value="{{ to_date }}"/>
+                            <select name="currency" value="{{ currency }}">
+                                <option value="">SELECT ONE</option>
+                                {% for cur in currencies %}
+                                    {% if  cur == currency %}
+                                        <option value={{ cur }} selected="selected">{{ cur }}</option>
+                                    {% else %}
+                                        <option value={{ cur }}>{{ cur }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+
+                        <input type="submit" value="Search"/>
+                        </p></h1>
+                    </form>
+                </article>
+                <p>
+                    {% if error %}
+                        {% for data in msg %}
+                            <p style="color:red">ERROR: {{ data }}</p>
+                        {% endfor %}
+                    {%  endif %}
+                </p>
+                {% if data_list %}
+                    <table>
+                        <tr>
+                            <th>Date</th>
+                            <th>Bank</th>
+                            <th>Buy</th>
+                            <th>Sell</th>
+                        </tr>
+                        {% for data in data_list %}
+                            <tr>
+                                <td>{{ data.date }}</td>
+                                <td>{{ data.bank }}</td>
+                                <td>{{ data.buy }}</td>
+                                <td>{{ data.sell }}</td>
+                            </tr>
+                        {%  endfor %}
+                    </table>
+                {% endif %}
+                {% if no_data %}
+                    <p style="color:red">NO DATA FOUND FOR {{ currency }}</p>
+                {% endif %}
+            </div>
+        </aside>
+
+
+
+    </body>
+</html>
+
